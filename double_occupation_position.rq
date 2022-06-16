@@ -1,0 +1,13 @@
+#+ summary: Observations with more than one occupation position
+#+ tags:
+#+   - errorDetection
+
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX cedarterms: <http://lod.cedar-project.nl/vocab/cedar#>
+ 
+SELECT ?obs FROM <urn:graph:cedar-mini:release> WHERE {
+       ?obs a qb:Observation.
+       ?obs cedarterms:occupationPosition ?pos1 .
+       ?obs cedarterms:occupationPosition ?pos2 .
+       FILTER (?pos1 != ?pos2 && ?pos1 < ?pos2)
+}

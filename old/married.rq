@@ -1,0 +1,23 @@
+#+ summary: Number of married female inhabitants by year
+#+ tags:
+#+   - maritalStatus
+
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX cedar: <http://lod.cedar-project.nl:8888/cedar/resource/>
+PREFIX maritalstatus: <http://lod.cedar-project.nl/vocab/cedar-maritalstatus#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX sdmx-code: <http://purl.org/linked-data/sdmx/2009/code#>
+PREFIX cedarterms: <http://lod.cedar-project.nl/vocab/cedar#>
+ 
+SELECT ?year (SUM(?pop) AS ?total) FROM <urn:graph:cedar-mini:release> WHERE {
+	?obs a qb:Observation.
+	?obs maritalstatus:maritalStatus maritalstatus:married.
+	?obs cedarterms:population ?pop.
+	?obs sdmx-dimension:sex sdmx-code:sex-F.
+	FILTER NOT EXISTS { 
+		?obs cedarterms:isTotal "1"^^<http://www.w3.org/2001/XMLSchema#integer>.
+	}
+	?slice a qb:Slice.
+	?slice qb:observation ?obs.
+	?slice sdmx-dimension:refPeriod ?year.
+} ORDER BY ?year

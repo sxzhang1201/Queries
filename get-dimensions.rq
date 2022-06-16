@@ -1,0 +1,12 @@
+#+ summary: Dimensions used in the harmonized dataset
+#+ tags:
+#+   - metadata
+
+PREFIX qb: <http://purl.org/linked-data/cube#>
+
+SELECT DISTINCT ?dimension FROM <urn:graph:cedar-mini:release> WHERE {
+	?d a qb:DataSet.
+	?d qb:structure ?dsd.
+	?dsd a qb:DataStructureDefinition.
+	?dsd qb:component [ qb:dimension ?dimension ].
+}

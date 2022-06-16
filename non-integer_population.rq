@@ -1,0 +1,12 @@
+#+ summary: Observations with non-integer population counts
+#+ tags: 
+#+   - errorDetection
+
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX cedarterms: <http://lod.cedar-project.nl/vocab/cedar#>
+ 
+SELECT ?obs FROM <urn:graph:cedar-mini:release> WHERE {
+       ?obs a qb:Observation .
+       ?obs cedarterms:population ?population .
+       FILTER (datatype(?population) != xsd:integer)
+}
